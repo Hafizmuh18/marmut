@@ -5,7 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.db import connection
 
-
+def test(request):
+    return render(request, "test.html")
 
 @csrf_exempt
 def login(request):
@@ -46,7 +47,7 @@ def login(request):
                 if cursor.fetchall():
                     songwriter = True
 
-            response = render(request, "test.html")
+            response = HttpResponseRedirect(reverse('auth:test'))
 
             # Set cookies based on roles
             response.set_cookie('email', email)
@@ -96,5 +97,3 @@ def logout(request):
     return response
 
 
-def test(request):
-    render(request, "test.html")
